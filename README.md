@@ -6,24 +6,24 @@
 
 ## Updating the server
 ```
-docker rm -f streaming-server
-scp -r webroot Dockerfile nginx.conf USER@SERVER_ADDRESS:~/streaming-server
-docker build -t streaming-server ~/streaming-server
+docker rm -f streaming-server # Run on the Droplet
+scp -r webroot Dockerfile nginx.conf USER@SERVER_ADDRESS:~/streaming-server # Run locally
+docker build -t streaming-server ~/streaming-server # Run on the Droplet
 ```
 
 ## Starting Docker container
 ```
-docker run -d -p 1935:1935 -p 80:80 --name streaming-server --restart always streaming-server
+docker run -d -p 1935:1935 -p 80:80 --name streaming-server --restart always streaming-server # Run on the Droplet
 ```
 
 ## Watching Docker logs
 ```
-docker logs -f streaming-server
+docker logs -f streaming-server # Run on the Droplet
 ```
 
 ## Connect into running Docker container
 ```
-docker exec -it streaming-server /bin/bash
+docker exec -it streaming-server /bin/bash # Run on the Droplet
 ```
 
 ### URLs
