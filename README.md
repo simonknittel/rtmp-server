@@ -28,5 +28,5 @@ docker exec -it streaming-server /bin/bash # Run on the Droplet
 
 ### URLs
 * rtmp://SERVER_ADDRESS/live/stream1
-* http://SERVER_ADDRESS/stream1.html
+* http://SERVER_ADDRESS/player.html
 * http://SERVER_ADDRESS/hls/stream1.m3u8

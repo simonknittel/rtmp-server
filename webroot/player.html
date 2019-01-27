@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="https://vjs.zencdn.net/7.3.0/video-js.css" rel="stylesheet">
+    <title>stream 1</title>
+  </head>
+
+  <body>
+    <form action="#" method="GET" style="margin-bottom: 1rem;">
+      <label for="key_input">Enter the stream key:</label>
+      <input type="text" id="key_input" name="key">
+      <button>Play</button>
+    </form>
+
+    <video-js id="player" width="1280" height="720" class="vjs-default-skin" controls style="display: none;"></video-js>
+
+    <script src="https://vjs.zencdn.net/7.3.0/video.js"></script>
+
+    <script>
+      const player = videojs('player');
+      const keyInput = document.querySelector('form input');
+
+      const form = document.querySelector('form').addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        player.src({
+          src: `/hls/${keyInput.value}.m3u8`,
+          type: 'application/x-mpegURL'
+        });
+
+        player.removeAttribute('style')
+
+        player.play();
+      });
+
+      keyInput.focus();
+    </script>
+  </body>
+</html>
