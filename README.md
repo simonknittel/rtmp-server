@@ -48,6 +48,16 @@ docker exec -it streaming-server /bin/bash
 
 
 ## URLs
-* rtmp://HOST/live/STREAMKEY
-* http://HOST/hls/STREAMKEY.m3u8
-* http://HOST/player.html
+* rtmp://HOST/live/STREAMKEY (for OBS and VLC)
+* http://HOST/hls/STREAMKEY.m3u8 (for VRChat)
+* http://HOST/ (web player)
+
+
+## OBS settings
+* **Resolution:** 1280x720
+* **Rate control:** CBR
+* **Bitrate:** 3000
+* **Keyframe Interval:** 2
+* **CPU Usage Preset:** fast
+* **Profile:** high
+* **Audio Bitrate:** 256
