@@ -92,7 +92,7 @@
     <div>
       <form action="#" method="GET">
         <input type="text" id="key_input" name="key" placeholder="Stream key">
-        <button>►</button>
+        <button>Play</button>
       </form>
 
       <video-js id="player" width="1280" height="720" class="vjs-default-skin player" controls></video-js>
@@ -110,8 +110,6 @@
             src: `/hls/${keyInput.value}.m3u8`,
             type: 'application/x-mpegURL'
           })
-
-          player.classList.remove('hide')
 
           player.play()
         })
