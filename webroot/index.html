@@ -2,108 +2,8 @@
 <html>
   <head>
     <link href="https://vjs.zencdn.net/7.4.1/video-js.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
     <title>index</title>
-
-    <style>
-      * {
-        box-sizing: border-box;
-      }
-
-      html,
-      body {
-        height: 100%;
-      }
-
-      html {
-        font-family: sans-serif;
-      }
-
-      body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-wrap: wrap;
-        margin: 0;
-        background: radial-gradient(circle, hsl(180, 100%, 5%) 0%, #000 100%);
-      }
-
-      .page-wrapper {
-        width: 100%;
-        max-width: 1280px;
-      }
-
-      form {
-        width: 100%;
-        max-width: 480px;
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 1rem;
-        margin-bottom: 1rem;
-        text-align: center;
-      }
-
-      .input-wrapper {
-        position: relative;
-      }
-
-      input,
-      button {
-        font-size: 1.5rem;
-      }
-
-      input {
-        width: 100%;
-        padding: 1rem;
-        outline: none;
-        border-radius: 5px;
-        border: 1px solid hsl(180, 100%, 10%);
-        background-color: #111;
-        color: #fff;
-        transition: border .1s;
-      }
-
-      input:hover,
-      input:focus {
-        border: 1px solid hsl(180, 100%, 20%);
-      }
-
-      button {
-        cursor: pointer;
-        position: absolute;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        padding-left: 2rem;
-        padding-right: 2rem;
-        outline: none;
-        border-top-right-radius: 5px;
-        border-bottom-right-radius: 5px;
-        border: none;
-        background-color: hsl(180, 100%, 10%);
-        color: #fff;
-        transition: background-color .1s;
-      }
-
-      button:hover {
-        background-color: hsl(180, 100%, 20%);
-      }
-
-      button:active {
-        background-color: hsl(180, 100%, 10%);
-      }
-
-      .error {
-        color: #f00;
-      }
-
-      .player {
-        box-shadow: 0 0 100px 0 hsl(180, 100%, 10%);
-      }
-
-      .hide {
-        display: none;
-      }
-    </style>
   </head>
 
   <body>
@@ -112,50 +12,20 @@
         <div class="input-wrapper">
           <input type="text" id="key_input" name="key" placeholder="Stream key" required>
           <button>Play</button>
+          <div class="loady"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
         </div>
 
         <p class="error"></p>
       </form>
 
-      <div class="hide">
+      <!-- <div class="hide"> -->
+      <div class="player-wrapper">
         <video-js id="player" width="1280" height="720" class="vjs-default-skin player" controls></video-js>
       </div>
 
       <script src="https://vjs.zencdn.net/7.4.1/video.js"></script>
-
-      <script>
-        const form = document.querySelector('form')
-        const keyInput = form.querySelector('input')
-        const error = form.querySelector('.error')
-
-        videojs('player').ready(function() {
-          const player = this;
-
-          player.on('error', (a, b, c) => {
-            error.innerHTML = 'Stream key wrong or stream offline'
-          })
-
-          player.on('durationchange', () => {
-            error.innerHTML = ''
-
-            const hiddenPlayer = document.querySelector('.hide')
-            if (hiddenPlayer) hiddenPlayer.classList.remove('hide')
-
-            player.play()
-          })
-
-          form.addEventListener('submit', (e) => {
-            e.preventDefault()
-
-            player.src({
-              src: `/hls/${keyInput.value}.m3u8`,
-              type: 'application/x-mpegURL'
-            })
-          })
-
-          keyInput.focus()
-        })
-      </script>
+      <script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js" integrity="sha256-pD9KZEZQimTLQOMTT99lBhGT7AXyMPz3g92G1iyd470=" crossorigin="anonymous"></script>
+      <script src="scripts.js"></script>
     </div>
   </body>
 </html>
