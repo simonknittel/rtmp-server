@@ -140,7 +140,7 @@ function onSubmit() {
   keyInput.blur()
 
   const hls = new Hls()
-  hls.loadSource(`https://squid-stream.ind3x.me/hls/${keyInput.value}.m3u8`)
+  hls.loadSource(`/hls/${keyInput.value}.m3u8`)
   hls.attachMedia(player)
 
   hls.on(Hls.Events.MANIFEST_PARSED, onSuccess);
