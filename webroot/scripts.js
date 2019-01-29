@@ -1,6 +1,7 @@
 const form = document.querySelector('form')
 const keyInput = form.querySelector('input')
 const error = form.querySelector('.error')
+let initial = true
 
 function transition() {
   const t1 = anime.timeline({
@@ -108,18 +109,18 @@ function transition() {
 }
 
 videojs('player').ready(function() {
-  const player = this;
+  const player = this
 
-  player.on('error', (a, b, c) => {
+  player.on('error', () => {
     error.innerHTML = 'Stream key wrong or stream offline'
   })
 
   player.on('durationchange', () => {
     error.innerHTML = ''
 
-    const hiddenPlayer = document.querySelector('.hide')
-    if (hiddenPlayer) {
-      transition();
+    if (initial) {
+      initial = false
+      transition()
     }
 
     player.play()
