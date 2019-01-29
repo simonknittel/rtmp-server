@@ -58,7 +58,7 @@ function transition() {
       width: [{
         delay: 0,
         duration: 750,
-        value: '100px'
+        value: '65px'
       }, {
         delay: 2000,
         duration: 1,
@@ -101,7 +101,7 @@ function transition() {
       targets: '.player-wrapper',
       height: {
         delay: 2000,
-        duration: 500,
+        duration: 1000,
         value: 720,
         easing: 'easeInOutExpo'
       }
@@ -128,6 +128,8 @@ videojs('player').ready(function() {
 
   form.addEventListener('submit', (e) => {
     e.preventDefault()
+
+    keyInput.blur()
 
     player.src({
       src: `/hls/${keyInput.value}.m3u8`,

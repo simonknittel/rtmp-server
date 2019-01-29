@@ -96,9 +96,6 @@ button:active {
 .player-wrapper {
   height: 0;
   overflow: hidden;
-}
-
-.player {
   box-shadow: 0 0 100px 0 hsl(180, 100%, 10%);
 }
 
