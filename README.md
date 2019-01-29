@@ -7,25 +7,20 @@
 
 ## How to: Start and update the server
 
-### 1. Stop and destroy the Docker container:
-```sh
-# Run on the server
-docker rm -f streaming-server
-```
-
-### 2. Upload new files to the server:
+### 1. Upload new files to the server:
 ```sh
 # Run locally
-scp -r webroot Dockerfile nginx.conf USER@HOST:~/streaming-server
+scp -r webroot Dockerfile nginx.conf USER@HOST:~/streaming-server # Windows
+rsync -r . USER@HOST:~/streaming-server # Unix (macOS, Linux)
 ```
 
-### 3. Build the new Docker container:
+### 2. Stop, destroy and build the new Docker container:
 ```sh
 # Run on the server
-docker build -t streaming-server ~/streaming-server
+docker rm -f streaming-server && docker build -t streaming-server ~/streaming-server
 ```
 
-### 4. Start the Docker container
+### 3. Start the Docker container
 ```sh
 # Run on the server
 docker run -d -p 1935:1935 -p 80:80 --name streaming-server --restart always streaming-server

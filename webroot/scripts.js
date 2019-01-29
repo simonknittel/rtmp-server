@@ -1,7 +1,9 @@
 const form = document.querySelector('form')
 const keyInput = form.querySelector('input')
-const error = form.querySelector('.error')
+const errorMessage = form.querySelector('.error')
 let initial = true
+let player = document.querySelector('#player')
+let keyByParamter = false
 
 function transition() {
   const t1 = anime.timeline({
@@ -82,6 +84,11 @@ function transition() {
         duration: 500,
         value: 1
       }],
+      complete: () => {
+        if (keyByParamter) {
+          errorMessage.innerHTML = 'Your player is muted'
+        }
+      }
     }, 0)
 
     .add({
@@ -108,34 +115,58 @@ function transition() {
     }, 0)
 }
 
-videojs('player').ready(function() {
-  const player = this
+function onError(_, error) {
+  if (error.details === 'bufferAppendError' || error.details === 'bufferStalledError') {
+    console.warn(error)
+    return
+  }
 
-  player.on('error', () => {
-    error.innerHTML = 'Stream key wrong or stream offline'
-  })
+  console.error(error)
+  errorMessage.innerHTML = 'Stream key wrong or stream offline'
+}
 
-  player.on('durationchange', () => {
-    error.innerHTML = ''
+function onSuccess() {
+  errorMessage.innerHTML = ''
 
-    if (initial) {
-      initial = false
-      transition()
-    }
+  if (initial) {
+    initial = false
+    transition()
+  }
 
-    player.play()
-  })
+  player.play()
+}
 
+function onSubmit() {
+  keyInput.blur()
+
+  const hls = new Hls()
+  hls.loadSource(`https://squid-stream.ind3x.me/hls/${keyInput.value}.m3u8`)
+  hls.attachMedia(player)
+
+  hls.on(Hls.Events.MANIFEST_PARSED, onSuccess);
+  hls.on(Hls.Events.ERROR, onError);
+}
+
+function initializePlayer() {
   form.addEventListener('submit', (e) => {
     e.preventDefault()
-
-    keyInput.blur()
-
-    player.src({
-      src: `/hls/${keyInput.value}.m3u8`,
-      type: 'application/x-mpegURL'
-    })
+    keyByParamter = false
+    player.muted = false
+    onSubmit()
   })
 
   keyInput.focus()
-})
+
+  const searchParams = new URLSearchParams(window.location.search)
+  if (searchParams.has('key')) {
+    keyByParamter = true
+    keyInput.value = searchParams.get('key')
+    onSubmit()
+  }
+
+  player.addEventListener('volumechange', () => {
+    errorMessage.innerHTML = ''
+  })
+}
+
+initializePlayer()
