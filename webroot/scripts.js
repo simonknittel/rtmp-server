@@ -123,6 +123,7 @@ function onError(_, error) {
 
   console.error(error)
   errorMessage.innerHTML = 'Stream key wrong or stream offline'
+  keyInput.focus()
 }
 
 function onSuccess() {
