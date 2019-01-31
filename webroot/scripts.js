@@ -57,7 +57,7 @@ function transition() {
 
     .add({
       targets: 'form',
-      width: [{
+      maxWidth: [{
         delay: 0,
         duration: 750,
         value: '65px'
@@ -109,8 +109,12 @@ function transition() {
       height: {
         delay: 2000,
         duration: 1000,
-        value: 720,
+        value: player.scrollHeight,
         easing: 'easeInOutExpo'
+      },
+      complete: () => {
+        console.log(player.scrollHeight)
+        document.querySelector('.player-wrapper').style.height = 'auto'
       }
     }, 0)
 }
@@ -141,7 +145,8 @@ function onSubmit() {
   keyInput.blur()
 
   const hls = new Hls()
-  hls.loadSource(`/hls/${keyInput.value}.m3u8`)
+  // hls.loadSource(`/hls/${keyInput.value}.m3u8`)
+  hls.loadSource(`https://squid-stream.ind3x.me/hls/${keyInput.value}.m3u8`)
   hls.attachMedia(player)
 
   hls.on(Hls.Events.MANIFEST_PARSED, onSuccess);

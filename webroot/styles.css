@@ -16,7 +16,7 @@ body {
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  margin: 0;
+  padding: 1rem;
   background: radial-gradient(circle, hsl(180, 100%, 5%) 0%, #000 100%);
 }
 
@@ -95,8 +95,14 @@ button:active {
 
 .player-wrapper {
   height: 0;
+  max-height: 720px;
   overflow: hidden;
   box-shadow: 0 0 100px 0 hsl(180, 100%, 10%);
+}
+
+video {
+  vertical-align: middle;
+  width: 100%;
 }
 
 
