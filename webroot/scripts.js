@@ -1,9 +1,12 @@
 const form = document.querySelector('form')
 const keyInput = form.querySelector('input')
 const errorMessage = form.querySelector('.error')
+const player = document.querySelector('#player')
+const canvas = document.getElementById('ambilight')
+const ctx = canvas.getContext('2d')
 let initial = true
-let player = document.querySelector('#player')
 let keyByParamter = false
+
 
 function transition() {
   const t1 = anime.timeline({
@@ -113,6 +116,7 @@ function transition() {
         easing: 'easeInOutExpo'
       },
       complete: () => {
+        document.querySelector('.player-wrapper').style.overflow = 'visible'
         document.querySelector('.player-wrapper').style.height = 'auto'
       }
     }, 0)
@@ -137,6 +141,10 @@ function onSuccess() {
       initial = false
       transition()
     }
+
+    window.setInterval(() => {
+      ctx.drawImage(player, 0, 0, canvas.width, canvas.height)
+    }, 50)
   })
 }
 
@@ -147,8 +155,8 @@ function onSubmit() {
   hls.loadSource(`/hls/${keyInput.value}.m3u8`)
   hls.attachMedia(player)
 
-  hls.on(Hls.Events.MANIFEST_PARSED, onSuccess);
-  hls.on(Hls.Events.ERROR, onError);
+  hls.on(Hls.Events.MANIFEST_PARSED, onSuccess)
+  hls.on(Hls.Events.ERROR, onError)
 }
 
 function initializePlayer() {
