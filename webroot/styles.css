@@ -95,7 +95,6 @@ button:active {
 
 .player-wrapper {
   height: 0;
-  max-height: 720px;
   overflow: hidden;
   box-shadow: 0 0 100px 0 hsl(180, 100%, 10%);
 }

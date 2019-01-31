@@ -113,7 +113,6 @@ function transition() {
         easing: 'easeInOutExpo'
       },
       complete: () => {
-        console.log(player.scrollHeight)
         document.querySelector('.player-wrapper').style.height = 'auto'
       }
     }, 0)
@@ -133,20 +132,19 @@ function onError(_, error) {
 function onSuccess() {
   errorMessage.innerHTML = ''
 
-  if (initial) {
-    initial = false
-    transition()
-  }
-
-  player.play()
+  player.play().then(() => {
+    if (initial) {
+      initial = false
+      transition()
+    }
+  })
 }
 
 function onSubmit() {
   keyInput.blur()
 
   const hls = new Hls()
-  // hls.loadSource(`/hls/${keyInput.value}.m3u8`)
-  hls.loadSource(`https://squid-stream.ind3x.me/hls/${keyInput.value}.m3u8`)
+  hls.loadSource(`/hls/${keyInput.value}.m3u8`)
   hls.attachMedia(player)
 
   hls.on(Hls.Events.MANIFEST_PARSED, onSuccess);
