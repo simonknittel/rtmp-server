@@ -28,7 +28,7 @@ body {
 
 form {
   width: 100%;
-  max-width: 480px;
+  max-width: 65px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 1rem;
@@ -55,7 +55,7 @@ input {
   border: 1px solid hsl(180, 100%, 10%);
   background-color: #111;
 
-  color: #fff;
+  color: #111;
 
   transition: border .1s;
 }
@@ -66,6 +66,7 @@ input:focus {
 }
 
 button {
+  opacity: 0;
   cursor: pointer;
   position: absolute;
   right: 0;
@@ -97,7 +98,7 @@ button:active {
 .video-wrapper {
   overflow: hidden;
   position: relative;
-  height: 0;
+  max-height: 0;
   /* box-shadow: 0 0 100px 0 hsl(180, 100%, 10%); */
   box-shadow: 0 0 100px 0 rgba(0, 0, 0, .5);
 }
@@ -190,10 +191,64 @@ canvas {
   animation-delay: -1.6s;
 }
 @keyframes loady {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+
+.t1 button { animation: .5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards t1button; }
+.t1 input { animation: .5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards t1input, .0s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0s forwards t1input2; }
+.t1 form { animation: .5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards t1form; }
+.t1 .loady { animation: .25s cubic-bezier(0.68, -0.55, 0.265, 1.55) .5s forwards t1loady; }
+@keyframes t1button {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@keyframes t1input {
+  from { color: #fff; }
+  to { color: #111; }
+}
+@keyframes t1input2 {
+  from { padding-left: 1rem; padding-right: 1rem; }
+  to { padding-left: 0; padding-right: 0; }
+}
+@keyframes t1form {
+  from { max-width: 480px }
+  to { max-width: 65px }
+}
+@keyframes t1loady {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+button { animation: .5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0s forwards t1buttonreverse; }
+input { animation: .5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0s forwards t1inputreverse, .0s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0s forwards t1input2reverse; }
+form { animation: .5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0s forwards t1formreverse; }
+@keyframes t1buttonreverse {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes t1inputreverse {
+  from { color: #111; }
+  to { color: #fff; }
+}
+@keyframes t1input2reverse {
+  from { padding-left: 0; padding-right: 0; }
+  to { padding-left: 1rem; padding-right: 1rem; }
+}
+@keyframes t1formreverse {
+  from { max-width: 65px }
+  to { max-width: 480px }
+}
+
+
+.t2 form { animation: .5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards t1form, .5s cubic-bezier(0.68, -0.55, 0.265, 1.55) 1.5s forwards t2form; }
+.t2 .video-wrapper { animation: 1s cubic-bezier(1, 0, 0, 1) 2s forwards t2videowrapper; }
+@keyframes t2form {
+  from { transform: translateY(0) }
+  to { transform: translateY(-200px) }
+}
+@keyframes t2videowrapper {
+  from { max-height: 0; }
+  to { max-height: 720px; } /* Actually video.scrollHeight */
 }
