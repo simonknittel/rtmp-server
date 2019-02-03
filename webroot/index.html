@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>index</title>
+    <title>Web player</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
     <link href="styles.css" rel="stylesheet">
   </head>
@@ -10,14 +10,16 @@
   <body>
     <div class="page-wrapper">
       <form action="" method="GET">
-        <div class="input-wrapper">
-          <input type="text" id="key_input" name="key" placeholder="Stream key" required>
-          <button>Play</button>
-          <div class="loady"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-        </div>
+        <div class="inner-form">
+          <div class="input-wrapper">
+            <input type="text" id="key_input" name="key" placeholder="Stream key" required>
+            <button>Play</button>
+            <div class="loady"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+          </div>
 
-        <p class="error"></p>
-        <p class="info"></p>
+          <p class="error"></p>
+          <p class="info"></p>
+        </div>
       </form>
 
       <div class="video-wrapper">

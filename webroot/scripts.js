@@ -1,50 +1,77 @@
 const pageWrapper = document.querySelector('.page-wrapper')
 const form = document.querySelector('form')
+const innerForm = document.querySelector('.inner-form')
+const button = form.querySelector('button')
 const keyInput = form.querySelector('input')
+const loady = form.querySelector('.loady')
 const errorMessage = form.querySelector('.error')
 const video = document.querySelector('#video')
+const videoWrapper = document.querySelector('.video-wrapper')
 const canvas = document.getElementById('ambilight')
 const ctx = canvas.getContext('2d')
 let initial = true
 let keyByParamter = false
+let t1Playing = false
 
-function playT1() {
-  pageWrapper.classList.add('t1')
-}
 
-function reverseT1(error) {
-  // TODO: Reverse play CSS animation
-  pageWrapper.classList.remove('t1')
+function reverseT1(error = true) {
+  form.removeEventListener('transitionend', reverseT1)
+  t1Playing = false
+
+  button.removeAttribute('style')
+  keyInput.removeAttribute('style')
+  form.removeAttribute('style')
+  loady.removeAttribute('style')
 
   if (!error) return
-  t1.finished.then(() => {
-    errorMessage.innerText = 'Stream key wrong or stream offline'
-  })
+  setTimeout(() => errorMessage.innerText = 'Stream key wrong or stream offline', 750)
+}
+
+function transitionToT2() {
+  innerForm.style.transform = 'translateY(-200px)'
+  form.style.opacity = 0
+  setTimeout(() => videoWrapper.style.maxHeight = video.scrollHeight + 'px', 250)
+
+  setTimeout(() => {
+    innerForm.removeAttribute('style')
+    button.removeAttribute('style')
+    keyInput.removeAttribute('style')
+    form.style.maxWidth = '480px'
+    loady.removeAttribute('style')
+  }, 500)
+}
+
+function afterT2() {
+  form.removeAttribute('style')
+  setTimeout(() => {
+    if (keyByParamter) errorMessage.Text = 'Your video is muted'
+  }, 500)
+
+  document.querySelector('.video-wrapper').style.overflow = 'visible'
+  document.querySelector('.video-wrapper').style.height = 'auto'
+
+  setInterval(() => ctx.drawImage(video, 0, 0, canvas.width, canvas.height), 50)
 }
 
 function showVideo() {
-  reverseT1()
+  loady.removeEventListener('transitionend', showVideo)
+  t1Playing = false
 
-  if (!initial) return
-  initial = true
+  setTimeout(() => {
+    if (initial) {
+      initial = false
 
-  pageWrapper.classList.add('t2')
-  // t2.finished.then(() => {
-  //   if (keyByParamter) errorMessage.Text = 'Your video is muted'
-  //
-  //   document.querySelector('.video-wrapper').style.overflow = 'visible'
-  //   document.querySelector('.video-wrapper').style.height = 'auto'
-  //
-  //   window.setInterval(() => {
-  //     ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
-  //   }, 50)
-  // })
+      transitionToT2()
+      setTimeout(afterT2, 1500)
+    } else {
+      reverseT1(false)
+    }
+  }, 500)
 }
 
 function onSuccess() {
-  // if (t1.completed) showVideo() // t1 finished before manifest loaded
-  // else t1.finished.then(showVideo) // t1 finishes after manifest loads
-  showVideo()
+  if (t1Playing) loady.addEventListener('transitionend', showVideo) // t1 finishes after manifest loaded
+  else showVideo() // t1 finished before manifest loaded
 
   video.play()
   video.focus()
@@ -56,22 +83,31 @@ function onError(_, error) {
     return
   }
 
-  // if (t1.completed) reverseT1(true)
-  // else t1.finished.then(reverseT1.bind(null, true)) // TODO: Show error message
-  reverseT1()
+  if (t1Playing) form.addEventListener('transitionend', reverseT1) // t1 finishes after manifest loaded
+  else reverseT1() // t1 finished before manifest loaded
 
   keyInput.focus()
   console.error(error)
 }
 
+function playT1() {
+  t1Playing = true
+  button.style.opacity = 0
+  keyInput.style.color = '#111'
+  keyInput.style.paddingLeft = 0
+  keyInput.style.paddingRight = 0
+  form.style.maxWidth = '65px'
+  setTimeout(() => loady.style.opacity = 1, 500)
+}
+
 function onSubmit() {
   errorMessage.innerText = ''
-  playT1()
   keyInput.blur()
 
+  playT1()
+
   const hls = new Hls()
-  // hls.loadSource(`/hls/${keyInput.value}.m3u8`)
-  hls.loadSource(`https://stream.ind3x.me/hls/${keyInput.value}.m3u8`)
+  hls.loadSource(`/hls/${keyInput.value}.m3u8`)
   hls.attachMedia(video)
 
   hls.on(Hls.Events.MANIFEST_PARSED, onSuccess)
