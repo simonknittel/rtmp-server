@@ -1,8 +1,8 @@
 # Streaming server
 
 ## Prerequisite: Set up a server with Docker installed
-1. https://digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-18-04
-2. https://digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04 (step 1 and 2)
+1. <https://digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-18-04>
+2. <https://digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-18-04> (step 1 and 2)
 
 
 ## How to: Start and update the server
@@ -44,8 +44,8 @@ docker exec -it streaming-server /bin/bash
 
 ## URLs
 * rtmp://HOST/live/STREAMKEY (for OBS and VLC)
-* http://HOST/hls/STREAMKEY.m3u8 (for VRChat)
-* http://HOST/ (web player)
+* <http://HOST/hls/STREAMKEY.m3u8> (for VRChat)
+* <http://HOST/> (web player)
 
 
 ## OBS settings
