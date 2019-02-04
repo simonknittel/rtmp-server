@@ -1,16 +1,19 @@
 const form = document.querySelector('form')
 const innerForm = document.querySelector('.inner-form')
 const button = form.querySelector('button')
-const keyInput = form.querySelector('input')
+const autoconnectWrapper = form.querySelector('#autoconnect_wrapper')
+const keyInput = form.querySelector('#key_input')
 const loady = form.querySelector('.loady')
 const errorMessage = form.querySelector('.error')
-const video = document.querySelector('#video')
+const video = document.getElementById('video')
 const videoWrapper = document.querySelector('.video-wrapper')
 const canvas = document.getElementById('ambilight')
 const ctx = canvas.getContext('2d')
+const autoconnect = document.getElementById('autoconnect')
 let initial = true
-let keyByGetParamter = false
-let t1Playing = false
+let gotKeyThroughGetParameter = false
+let t1IsPlaying = false
+let autoconnectInterval = null
 
 
 function resetErrorMessage() {
@@ -19,8 +22,9 @@ function resetErrorMessage() {
 
 
 function playT1() {
-  t1Playing = true
+  t1IsPlaying = true
   button.style.opacity = 0
+  autoconnectWrapper.style.opacity = 0
   keyInput.style.color = '#111'
   keyInput.style.paddingLeft = 0
   keyInput.style.paddingRight = 0
@@ -31,11 +35,12 @@ function playT1() {
 
 function reverseT1(error = true) {
   form.removeEventListener('transitionend', reverseT1)
-  t1Playing = false
+  t1IsPlaying = false
 
   loady.removeAttribute('style')
   setTimeout(() => {
     button.removeAttribute('style')
+    autoconnectWrapper.removeAttribute('style')
     form.removeAttribute('style')
   }, 250)
   setTimeout(() => keyInput.removeAttribute('style'), 500)
@@ -53,6 +58,7 @@ function transitionToT2() {
   setTimeout(() => {
     innerForm.removeAttribute('style')
     button.removeAttribute('style')
+    autoconnectWrapper.removeAttribute('style')
     keyInput.removeAttribute('style')
     form.style.maxWidth = '480px'
     loady.removeAttribute('style')
@@ -63,7 +69,7 @@ function transitionToT2() {
 function afterT2() {
   form.removeAttribute('style')
   setTimeout(() => {
-    if (keyByGetParamter) errorMessage.Text = 'Your video is muted'
+    if (gotKeyThroughGetParameter) errorMessage.Text = 'Your video is muted'
   }, 500)
 
   document.querySelector('.video-wrapper').style.overflow = 'visible'
@@ -75,7 +81,7 @@ function afterT2() {
 
 function showVideo() {
   loady.removeEventListener('transitionend', showVideo)
-  t1Playing = false
+  t1IsPlaying = false
 
   setTimeout(() => {
     if (initial) {
@@ -90,7 +96,7 @@ function showVideo() {
 
 
 function onSuccess() {
-  if (t1Playing) loady.addEventListener('transitionend', showVideo) // t1 finishes after manifest loaded
+  if (t1IsPlaying) loady.addEventListener('transitionend', showVideo) // t1 finishes after manifest loaded
   else showVideo() // t1 finished before manifest loaded
 
   video.play()
@@ -104,7 +110,7 @@ function onError(_, error) {
     return
   }
 
-  if (t1Playing) form.addEventListener('transitionend', reverseT1) // t1 finishes after manifest loaded
+  if (t1IsPlaying) form.addEventListener('transitionend', reverseT1) // t1 finishes after manifest loaded
   else reverseT1() // t1 finished before manifest loaded
 
   keyInput.focus()
@@ -114,7 +120,8 @@ function onError(_, error) {
 
 function initVideo() {
   const hls = new Hls()
-  hls.loadSource(`/hls/${keyInput.value}.m3u8`)
+  // hls.loadSource(`/hls/${keyInput.value}.m3u8`)
+  hls.loadSource(`https://stream.ind3x.me/hls/${keyInput.value}.m3u8`)
   hls.attachMedia(video)
 
   hls.on(Hls.Events.MANIFEST_PARSED, onSuccess)
@@ -135,9 +142,25 @@ function autoSubmitOnPageLoad() {
   const searchParams = new URLSearchParams(window.location.search)
   if (!searchParams.has('key')) return
 
-  keyByGetParamter = true
+  gotKeyThroughGetParameter = true
   keyInput.value = searchParams.get('key')
   onSubmit()
+}
+
+
+function onChange() {
+  if (autoconnect.checked) {
+    autoconnectInterval = setInterval(() => {
+      console.table(video)
+      if () return // TODO: Return when playing
+
+      gotKeyThroughGetParameter = false
+      video.muted = false
+      onSubmit()
+    }, 5000)
+  } else {
+    clearInterval(autoconnectInterval)
+  }
 }
 
 
@@ -148,10 +171,12 @@ function init() {
 
   form.addEventListener('submit', (e) => {
     e.preventDefault()
-    keyByGetParamter = false
+    gotKeyThroughGetParameter = false
     video.muted = false
     onSubmit()
   })
+
+  autoconnect.addEventListener('change', onChange)
 
   video.addEventListener('volumechange', resetErrorMessage)
 }

@@ -45,15 +45,15 @@ form {
   position: relative;
 }
 
-input,
+#key_input,
 button {
   font-size: 1.5rem;
 }
 
-input {
+#key_input {
   width: 100%;
 
-  padding: 1rem 8rem 1rem 1rem;
+  padding: 1rem 11rem 1rem 1rem;
 
   outline: none;
   border-radius: 5px;
@@ -65,22 +65,20 @@ input {
   transition: border .1s, color .5s cubic-bezier(1, 0, 0, 1);
 }
 
-input:hover,
-input:focus {
+#key_input:hover,
+#key_input:focus {
   border: 1px solid hsl(180, 100%, 20%);
 }
 
 button {
   cursor: pointer;
   position: absolute;
-  right: 0;
+  right: 3rem;
   top: 0;
   bottom: 0;
   padding-left: 2rem;
   padding-right: 2rem;
   outline: none;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
   border: none;
   background-color: hsl(180, 100%, 10%);
   color: #fff;
@@ -93,6 +91,63 @@ button:hover {
 
 button:active {
   background-color: hsl(180, 100%, 10%);
+}
+
+#autoconnect_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  right: 0;
+  top: 0;
+
+  height: 100%;
+  width: 3rem;
+
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border-left: 1px solid hsl(180, 100%, 5%);
+  background-color: hsl(180, 100%, 10%);
+
+  transition: background-color .1s, opacity .5s cubic-bezier(1, 0, 0, 1);
+}
+
+#autoconnect_wrapper:hover {
+  cursor: pointer;
+  background-color: hsl(180, 100%, 20%);
+}
+
+#autoconnect_wrapper:active {
+  background-color: hsl(180, 100%, 10%);
+}
+
+#autoconnect_wrapper span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 1.5rem;
+  height: 1.5rem;
+
+  border-radius: 5px;
+  border: hsl(180, 100%, 5%);
+  background-color: hsl(180, 100%, 5%);
+}
+
+#autoconnect {
+  display: none;
+}
+
+#autoconnect:checked + span::before {
+  content: '';
+  display: inline-block;
+
+  width: .75rem;
+  height: .75rem;
+
+  border-radius: 5px;
+  background-color: hsl(180, 100%, 20%);
 }
 
 .error {
