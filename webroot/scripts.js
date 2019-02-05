@@ -120,8 +120,7 @@ function onError(_, error) {
 
 function initVideo() {
   const hls = new Hls()
-  // hls.loadSource(`/hls/${keyInput.value}.m3u8`)
-  hls.loadSource(`https://stream.ind3x.me/hls/${keyInput.value}.m3u8`)
+  hls.loadSource(`/hls/${keyInput.value}.m3u8`)
   hls.attachMedia(video)
 
   hls.on(Hls.Events.MANIFEST_PARSED, onSuccess)
@@ -148,16 +147,21 @@ function autoSubmitOnPageLoad() {
 }
 
 
+function submittedByInput() {
+  gotKeyThroughGetParameter = false
+  video.muted = false
+  onSubmit()
+}
+
+
 function onChange() {
   if (autoconnect.checked) {
-    autoconnectInterval = setInterval(() => {
-      console.table(video)
-      if () return // TODO: Return when playing
+    submittedByInput()
 
-      gotKeyThroughGetParameter = false
-      video.muted = false
-      onSubmit()
-    }, 5000)
+    autoconnectInterval = setInterval(() => {
+      if ((video.paused || video.currentTime > 0) && !video.ended) return
+      submittedByInput()
+    }, 10000)
   } else {
     clearInterval(autoconnectInterval)
   }
@@ -171,9 +175,7 @@ function init() {
 
   form.addEventListener('submit', (e) => {
     e.preventDefault()
-    gotKeyThroughGetParameter = false
-    video.muted = false
-    onSubmit()
+    submittedByInput()
   })
 
   autoconnect.addEventListener('change', onChange)
