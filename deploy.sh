@@ -1,3 +1,5 @@
+ssh-keyscan $D_HOST >> ~/.ssh/known_hosts
+
 rsync -r Dockerfile nginx.conf webroot $D_USER@$D_HOST:$D_LOCATION
 
 ssh $D_USER@$D_HOST "docker rm -f streaming-server && docker build -t streaming-server $D_LOCATION"
