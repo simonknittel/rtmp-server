@@ -1,4 +1,4 @@
-language: minial
+language: minimal
 deploy:
   provider: script
   script: bash deploy.sh
