@@ -1,4 +1,8 @@
-ssh-keyscan $D_HOST >> ~/.ssh/known_hosts
+# 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+mkdir -p ~/.ssh
+eval $(ssh-agent -s)
+echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+ssh-add <(echo "$PRIVATE_SSH_KEY")
 
 rsync -r Dockerfile nginx.conf webroot $D_USER@$D_HOST:$D_LOCATION
 
