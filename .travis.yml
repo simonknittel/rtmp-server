@@ -1,9 +1,0 @@
-language: minimal
-# install: # TODO: Install GZIP and Brotli
-# script: # TODO: Compress code with GZIP and Brotli
-deploy:
-  skip_cleanup: true
-  provider: script
-  script: bash deploy.sh
-  on:
-    branch: feature/deployment
