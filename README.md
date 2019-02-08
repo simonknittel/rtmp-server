@@ -11,7 +11,7 @@
 ```sh
 # Run locally
 scp -r webroot Dockerfile nginx.conf USER@HOST:~/streaming-server # Windows
-rsync -r . USER@HOST:~/streaming-server # Unix (macOS, Linux)
+rsync -r Dockerfile nginx.conf webroot USER@HOST:~/streaming-server # Unix (macOS, Linux)
 ```
 
 ### 2. Stop, destroy and build the new Docker container:
