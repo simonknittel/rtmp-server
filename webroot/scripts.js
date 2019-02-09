@@ -84,7 +84,7 @@ function enableAmbilight() {
 function afterT2() {
   form.removeAttribute('style')
   setTimeout(() => {
-    if (gotKeyThroughGetParameter) errorMessage.Text = 'Your video is muted'
+    if (gotKeyThroughGetParameter) showErrorMessage('Your video is muted')
   }, 500)
 
   videoWrapper.style.overflow = 'visible'
@@ -156,15 +156,16 @@ function autoSubmitOnPageLoad() {
   const searchParams = new URLSearchParams(window.location.search)
   if (!searchParams.has('key')) return
 
-  gotKeyThroughGetParameter = true
   keyInput.value = searchParams.get('key')
+  gotKeyThroughGetParameter = true
+  video.addEventListener('volumechange', resetErrorMessage)
   onSubmit()
 }
 
 
 function submittedByInput() {
-  gotKeyThroughGetParameter = false
   video.muted = false
+  gotKeyThroughGetParameter = false
   onSubmit()
 }
 
@@ -186,7 +187,7 @@ function disableAutoconnect() {
 }
 
 
-function onChange() {
+function toggleAutoconnect() {
   if (autoconnect.checked) enableAutoconnect()
   else disableAutoconnect()
 }
@@ -202,9 +203,7 @@ function init() {
     submittedByInput()
   })
 
-  autoconnect.addEventListener('change', onChange)
-
-  video.addEventListener('volumechange', resetErrorMessage)
+  autoconnect.addEventListener('change', toggleAutoconnect)
 }
 
 
