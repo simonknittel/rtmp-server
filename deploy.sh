@@ -4,10 +4,10 @@ cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=./installed ..
 cmake --build . --config Release --target install
 
 cd ../../
-brotli --best --rm webroot/error.html
-brotli --best --rm webroot/index.html
-brotli --best --rm webroot/scripts.js
-brotli --best --rm webroot/styles.css
+brotli/out/installed/bin/brotli --best --rm webroot/error.html
+brotli/out/installed/bin/brotli --best --rm webroot/index.html
+brotli/out/installed/bin/brotli --best --rm webroot/scripts.js
+brotli/out/installed/bin/brotli --best --rm webroot/styles.css
 
 ls -la webroot
 
