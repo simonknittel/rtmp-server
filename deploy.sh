@@ -1,3 +1,5 @@
+pip install brotli
+
 brotli --best --rm webroot/error.html
 brotli --best --rm webroot/index.html
 brotli --best --rm webroot/scripts.js
