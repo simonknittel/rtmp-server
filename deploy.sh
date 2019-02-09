@@ -1,9 +1,10 @@
-sudo apt-get -y install brotli
+pip install brotli
+pip show brotli
 
-brotli --best --rm webroot/error.html
-brotli --best --rm webroot/index.html
-brotli --best --rm webroot/scripts.js
-brotli --best --rm webroot/styles.css
+# python bro.py --best --rm webroot/error.html
+# python bro.py --best --rm webroot/index.html
+# python bro.py --best --rm webroot/scripts.js
+# python bro.py --best --rm webroot/styles.css
 
 ls -la webroot
 
