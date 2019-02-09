@@ -16,6 +16,11 @@ let t1IsPlaying = false
 let autoconnectInterval = null
 
 
+showErrorMessage(message) {
+  errorMessage.innerText = message
+}
+
+
 function resetErrorMessage() {
   errorMessage.innerText = ''
 }
@@ -46,7 +51,7 @@ function reverseT1(error = true) {
   setTimeout(() => keyInput.removeAttribute('style'), 500)
 
   if (!error) return
-  setTimeout(() => errorMessage.innerText = 'Stream key wrong or stream offline', 750)
+  setTimeout(showErrorMessage.bind(null, 'Stream key wrong or stream offline', 750)
 }
 
 
@@ -66,16 +71,26 @@ function transitionToT2() {
 }
 
 
+function drawAmbilight() {
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height)
+}
+
+
+function enableAmbilight() {
+  setInterval(drawAmbilight, 50)
+}
+
+
 function afterT2() {
   form.removeAttribute('style')
   setTimeout(() => {
     if (gotKeyThroughGetParameter) errorMessage.Text = 'Your video is muted'
   }, 500)
 
-  document.querySelector('.video-wrapper').style.overflow = 'visible'
-  document.querySelector('.video-wrapper').style.height = 'auto'
+  videoWrapper.style.overflow = 'visible'
+  videoWrapper.style.height = 'auto'
 
-  setInterval(() => ctx.drawImage(video, 0, 0, canvas.width, canvas.height), 50)
+  enableAmbilight()
 }
 
 
@@ -154,17 +169,26 @@ function submittedByInput() {
 }
 
 
-function onChange() {
-  if (autoconnect.checked) {
-    submittedByInput()
+function autoconnectTry() {
+  if ((video.paused || video.currentTime > 0) && !video.ended) return
+  submittedByInput()
+}
 
-    autoconnectInterval = setInterval(() => {
-      if ((video.paused || video.currentTime > 0) && !video.ended) return
-      submittedByInput()
-    }, 10000)
-  } else {
-    clearInterval(autoconnectInterval)
-  }
+
+function enableAutoconnect() {
+  submittedByInput()
+  autoconnectInterval = setInterval(autoconnectTry, 10000)
+}
+
+
+function disableAutoconnect() {
+  clearInterval(autoconnectInterval)
+}
+
+
+function onChange() {
+  if (autoconnect.checked) enableAutoconnect()
+  else disableAutoconnect()
 }
 
 
