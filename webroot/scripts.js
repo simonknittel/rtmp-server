@@ -16,7 +16,7 @@ let t1IsPlaying = false
 let autoconnectInterval = null
 
 
-showErrorMessage(message) {
+function showErrorMessage(message) {
   errorMessage.innerText = message
 }
 
@@ -51,7 +51,7 @@ function reverseT1(error = true) {
   setTimeout(() => keyInput.removeAttribute('style'), 500)
 
   if (!error) return
-  setTimeout(showErrorMessage.bind(null, 'Stream key wrong or stream offline', 750)
+  setTimeout(showErrorMessage.bind(null, 'Stream key wrong or stream offline'), 750)
 }
 
 
