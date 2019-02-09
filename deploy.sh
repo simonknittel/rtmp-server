@@ -1,10 +1,13 @@
-pip install brotli
-pip show brotli
+git clone https://github.com/google/brotli.git && cd brotli
+mkdir out && cd out
+cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=./installed ..
+cmake --build . --config Release --target install
 
-python /home/rof/.pyenv/versions/2.7.15/lib/python2.7/site-packages/bro.py --best --rm webroot/error.html
-python /home/rof/.pyenv/versions/2.7.15/lib/python2.7/site-packages/bro.py --best --rm webroot/index.html
-python /home/rof/.pyenv/versions/2.7.15/lib/python2.7/site-packages/bro.py --best --rm webroot/scripts.js
-python /home/rof/.pyenv/versions/2.7.15/lib/python2.7/site-packages/bro.py --best --rm webroot/styles.css
+cd ../../
+brotli --best --rm webroot/error.html
+brotli --best --rm webroot/index.html
+brotli --best --rm webroot/scripts.js
+brotli --best --rm webroot/styles.css
 
 ls -la webroot
 
