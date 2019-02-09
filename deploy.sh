@@ -1,4 +1,4 @@
-pip install brotli
+apt-get -y install brotli
 
 brotli --best --rm webroot/error.html
 brotli --best --rm webroot/index.html
