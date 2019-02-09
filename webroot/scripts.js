@@ -120,7 +120,8 @@ function onError(_, error) {
 
 function initVideo() {
   const hls = new Hls()
-  hls.loadSource(`/hls/${keyInput.value}.m3u8`)
+  // hls.loadSource(`/hls/${keyInput.value}.m3u8`)
+  hls.loadSource(`https://stream.ind3x.me/hls/${keyInput.value}.m3u8`)
   hls.attachMedia(video)
 
   hls.on(Hls.Events.MANIFEST_PARSED, onSuccess)
