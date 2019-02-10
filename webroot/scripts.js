@@ -135,7 +135,10 @@ function onError(_, error) {
 
 function initVideo() {
   const hls = new Hls()
-  hls.loadSource(`/hls/${keyInput.value}.m3u8`)
+
+  if (keyInput.value.indexOf('http') === 0) hls.loadSource(keyInput.value)
+  else hls.loadSource(`/hls/${keyInput.value}.m3u8`)
+
   hls.attachMedia(video)
 
   hls.on(Hls.Events.MANIFEST_PARSED, onSuccess)
