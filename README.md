@@ -20,7 +20,7 @@ rsync -r Dockerfile nginx.conf webroot USER@HOST:~/streaming-server # Unix (macO
 
 ```sh
 # Run on the server
-docker rm -f streaming-server && docker build -t streaming-server ~/streaming-server
+docker rm -f streaming-server && docker build --build-arg API_KEY="AMPLIFY_API_KEY" -t streaming-server ~/streaming-server
 ```
 
 ### 3. Start the Docker container
