@@ -6,4 +6,5 @@ COPY webroot /usr/local/nginx/html/
 # Install Amplify
 RUN curl -L -O https://github.com/nginxinc/nginx-amplify-agent/raw/master/packages/install.sh
 ARG API_KEY
+RUN alias apt-get='apt-get -y'
 RUN sh ./install.sh
