@@ -111,7 +111,7 @@ function showVideo() {
 
 
 function onSuccess() {
-  if (t1IsPlaying) loady.addEventListener('transitionend', showVideo) // t1 finishes after manifest loaded
+  if (t1IsPlaying) setTimeout(() => {showVideo()}, 1500) // t1 finishes after manifest loaded
   else showVideo() // t1 finished before manifest loaded
 
   video.play()
@@ -125,7 +125,7 @@ function onError(_, error) {
     return
   }
 
-  if (t1IsPlaying) form.addEventListener('transitionend', reverseT1) // t1 finishes after manifest loaded
+  if (t1IsPlaying) setTimeout(() => {reverseT1(true)}, 1500) // t1 finishes after manifest loaded
   else reverseT1() // t1 finished before manifest loaded
 
   keyInput.focus()
