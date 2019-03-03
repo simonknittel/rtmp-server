@@ -1,5 +1,7 @@
 # Streaming server
 
+[![Donate on patreon](https://badgen.net/badge/donate%20on/patreon/orange)](https://patreon.com/simonknittel)
+
 ## Prerequisite: Set up a server with Docker installed
 
 1. <https://digitalocean.com/community/tutorials/initial-server-setup-with-ubuntu-18-04>
@@ -57,10 +59,17 @@ docker exec -it streaming-server /bin/bash
 
 ## OBS settings
 
-* **Resolution:** 1280x720
 * **Rate control:** CBR
-* **Bitrate:** 3000
 * **Keyframe Interval:** 2
 * **CPU Usage Preset:** fast
 * **Profile:** high
 * **Audio Bitrate:** 256
+
+
+## Support
+
+_"Donations are not required but appreciated."_
+
+Like this quote implies I won't stop make stuff open source, if there are no donations, but it would always be very appreciated by me ❤
+
+[![Become a patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://patreon.com/simonknittel)
