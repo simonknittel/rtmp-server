@@ -69,8 +69,8 @@ docker exec -it streaming-server /bin/bash
 
 ## Support
 
-_"Donations are not required but appreciated."_
+_"Donations are not required but always appreciated."_
 
-Like this quote implies I won't stop make stuff open source, if there are no donations, but it would always be very appreciated by me ❤
+Like this quote implies, I won't stop make stuff open source, if there are no donations. But they would always be appreciated by me ❤
 
 [![Become a patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://patreon.com/simonknittel)
