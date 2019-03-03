@@ -64,13 +64,13 @@ docker exec -it streaming-server /bin/bash
 * **Keyframe Interval:** 2
 * **CPU Usage Preset:** fast
 * **Profile:** high
-* **Audio Bitrate:** 256
+* **Audio Bitrate:** 192
 
 
 ## Support
 
 _"Donations are not required but always appreciated."_
 
-Like this quote implies, I won't stop make stuff open source, if there are no donations. But they would always be appreciated by me ❤
+Like this quote implies, I won't stop make things open source, if there are no donations. But they would always be appreciated by me ❤
 
 [![Become a patreon](https://c5.patreon.com/external/logo/become_a_patron_button.png)](https://patreon.com/simonknittel)

@@ -12,6 +12,14 @@ html {
   font-family: sans-serif;
 }
 
+.hide-interface {
+  cursor: none;
+}
+
+.hide-interface form {
+  opacity: 0;
+}
+
 body {
   display: flex;
   justify-content: center;

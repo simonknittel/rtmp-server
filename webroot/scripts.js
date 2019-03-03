@@ -14,6 +14,7 @@ let initial = true
 let gotKeyThroughGetParameter = false
 let t1IsPlaying = false
 let autoconnectInterval = null
+let interfaceTimeout = null;
 
 
 function showErrorMessage(message) {
@@ -81,6 +82,19 @@ function enableAmbilight() {
 }
 
 
+function hideInterface() {
+  document.documentElement.classList.add('hide-interface')
+}
+
+
+function resetInterfaceTimeout() {
+  document.documentElement.classList.remove('hide-interface')
+  clearTimeout(interfaceTimeout)
+
+  interfaceTimeout = setTimeout(hideInterface, 1000)
+}
+
+
 function afterT2() {
   form.removeAttribute('style')
   setTimeout(() => {
@@ -89,6 +103,9 @@ function afterT2() {
 
   videoWrapper.style.overflow = 'visible'
   videoWrapper.style.height = 'auto'
+
+  hideInterface()
+  document.documentElement.addEventListener('mousemove', resetInterfaceTimeout)
 
   enableAmbilight()
 }
