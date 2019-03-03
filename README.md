@@ -1,6 +1,7 @@
 # Streaming server
 
 [![Donate on patreon](https://badgen.net/badge/donate%20on/patreon/orange)](https://patreon.com/simonknittel)
+[![Codeship](https://img.shields.io/codeship/bd0163c0-1f1e-0137-1b74-06b44028c6c6/master.svg)](https://app.codeship.com/projects/329283)
 
 ## Prerequisite: Set up a server with Docker installed
 
