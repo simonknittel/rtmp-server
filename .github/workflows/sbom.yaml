@@ -1,0 +1,38 @@
+name: Upload SBOM to Dependency-Track
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - Dockerfile
+
+jobs:
+  generate_and_upload:
+    runs-on: ubuntu-22.04
+    steps:
+
+      - uses: docker/setup-buildx-action@v2.2.1
+
+      - uses: docker/build-push-action@v3.2.0
+        with:
+          context: .
+          load: true
+          tags: simonknittel/rtmp-server:master
+
+      - uses: anchore/sbom-action@v0.12.0
+        with:
+          image: simonknittel/rtmp-server:master
+          artifact-name: sbom.cdx.xml
+
+      - uses: DependencyTrack/gh-upload-sbom@v1.0.0
+        with:
+          serverhostname: ${{ secrets.DTRACK_SERVERHOSTNAME }}
+          apikey: ${{ secrets.DTRACK_APIKEY }}
+          project: ${{ secrets.DTRACK_PROJECT }}
+          bomfilename: sbom.cdx.xml
+
+      - uses: actions/upload-artifact@v3.1.1
+        with:
+          name: sbom.cdx.xml
+          path: sbom.cdx.xml

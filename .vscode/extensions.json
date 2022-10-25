@@ -1,6 +1,7 @@
 {
 	"recommendations": [
 		"ms-azuretools.vscode-docker",
-		"hangxingliu.vscode-nginx-conf-hint"
+		"hangxingliu.vscode-nginx-conf-hint",
+		"cschleiden.vscode-github-actions"
 	]
 }
