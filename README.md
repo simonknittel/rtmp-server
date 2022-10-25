@@ -4,17 +4,15 @@ Simple demo project to combine tiangolo's nginx-rtmp Docker image with a custom 
 
 ## Usage
 
-```
+```sh
 docker run -p 1935:1935 -p 80:80 simonknittel/rtmp-server
 ```
 
-
 ## URLs
 
-* rtmp://HOST/live/STREAMKEY (for OBS and VLC)
-* http://HOST/hls/STREAMKEY.m3u8 (for VRChat)
-* http://HOST/ (web player)
-
+* `rtmp://HOST/live/STREAMKEY` (for OBS and VLC)
+* `http://HOST/hls/STREAMKEY.m3u8` (for VRChat)
+* `http://HOST/` (web player)
 
 ## OBS settings
 
