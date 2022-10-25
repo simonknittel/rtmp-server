@@ -27,18 +27,18 @@ jobs:
       - uses: anchore/sbom-action@v0.12.0
         with:
           image: simonknittel/rtmp-server:master
-          artifact-name: sbom.cdx.xml
-          output-file: sbom.cdx.xml
-          format: cyclonedx
+          artifact-name: sbom.cdx.json
+          output-file: sbom.cdx.json
+          format: cyclonedx-json
 
       - uses: DependencyTrack/gh-upload-sbom@master
         with:
           serverhostname: ${{ secrets.DTRACK_SERVERHOSTNAME }}
           apikey: ${{ secrets.DTRACK_APIKEY }}
           project: ${{ secrets.DTRACK_PROJECT }}
-          bomfilename: sbom.cdx.xml
+          bomfilename: sbom.cdx.json
 
       - uses: actions/upload-artifact@v3.1.1
         with:
-          name: sbom.cdx.xml
-          path: sbom.cdx.xml
+          name: sbom.cdx.json
+          path: sbom.cdx.json
