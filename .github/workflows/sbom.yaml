@@ -28,8 +28,9 @@ jobs:
         with:
           image: simonknittel/rtmp-server:master
           artifact-name: sbom.cdx.xml
+          output-file: ./
 
-      - uses: DependencyTrack/gh-upload-sbom@v1.0.0
+      - uses: DependencyTrack/gh-upload-sbom@master
         with:
           serverhostname: ${{ secrets.DTRACK_SERVERHOSTNAME }}
           apikey: ${{ secrets.DTRACK_APIKEY }}
